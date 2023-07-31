@@ -1,0 +1,31 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.paper {
+  padding: 16px;
+  max-width: 1600;
+}
+.title {
+  margin-bottom: 8px;
+  text-align: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.input {
+  margin-bottom: 8px;
+}
+.button {
+  align-self: center;
+  margin-top: 8px;
+}
+.link {
+  margin-top: 8px;
+  text-align: center;
+}
