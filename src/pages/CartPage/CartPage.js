@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./CartPage.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,8 +13,19 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { loadStripe } from "@stripe/stripe-js";
 
+let stripePromise;
+
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+  }
+  return stripePromise;
+};
 const CartPage = () => {
+  const [stripeError, setStripeError] = useState(null);
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const {
     data: cartProducts,
@@ -22,6 +33,31 @@ const CartPage = () => {
     totalAmount,
     deliveryCharge,
   } = useSelector((state) => state.cart);
+
+  const item = {
+    price: "price_1NafivSAWOWJ4tXWD94Nfd6d",
+    quantity: 1,
+  };
+
+  const checkoutOptions = {
+    lineItems: [item],
+    mode: "payment",
+    successUrl: `${window.location.origin}/success`,
+    cancelUrl: `${window.location.origin}/cancel`,
+  };
+
+  const redirectToCheckout = async () => {
+    setLoading(true);
+    console.log("redirectToCheckout");
+
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout(checkoutOptions);
+    console.log("Stripe checkout error", error);
+
+    if (error) setStripeError(error.message);
+    setLoading(false);
+  };
+  if (stripeError) alert(stripeError);
 
   useEffect(() => {
     dispatch(getCartTotal());
@@ -178,7 +214,12 @@ const CartPage = () => {
                     </span>
                   </div>
                   <div className="cart-summary-btn">
-                    <button type="button" className="btn-secondary">
+                    <button
+                      disabled={isLoading}
+                      type="button"
+                      className="btn-secondary"
+                      onClick={redirectToCheckout}
+                    >
                       Proceed to Checkout
                     </button>
                   </div>

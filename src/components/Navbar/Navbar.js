@@ -4,20 +4,21 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCartTotal } from "../../store/cartSlice";
 import { useNavigate } from "react-router-dom";
-//import { useAuth0 } from "@auth0/auth0-react";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { googleLogout } from "@react-oauth/google";
+import { clearUserDetails } from "../../store/appSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const { totalItems } = useSelector((state) => state.cart);
   const location = useLocation();
-  // const { logout } = useAuth0();
   const navigate = useNavigate();
 
-  const logout = () => {
-    // Perform any logout actions here, if necessary.
-
-    // Use history.push to navigate to the login page
+  const logoutMethod = () => {
+    googleLogout();
+    dispatch(clearUserDetails());
     navigate("/login");
+    localStorage.clear();
   };
 
   useEffect(() => {
@@ -30,8 +31,8 @@ const Navbar = () => {
         <div className="container">
           <div className="navbar-top flex flex-between">
             <Link to="/" className="navbar-brand">
-              <span className="text-gold">Apni</span>
-              <span className="text-red">Dukan</span>
+              <span className="text-gold">Online</span>
+              <span className="text-red">Store</span>
             </Link>
 
             {location.pathname !== "/login" ? (
@@ -49,7 +50,9 @@ const Navbar = () => {
             ) : null}
             <div className="btn-txt fw-5">
               {location.pathname !== "/login" ? (
-                <button onClick={logout}>Logout</button>
+                <button onClick={logoutMethod}>
+                  <LogoutIcon fontSize="large" />
+                </button>
               ) : null}
             </div>
           </div>

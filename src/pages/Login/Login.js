@@ -4,17 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Paper, Typography, TextField, Button } from "@mui/material";
 import "./Login.scss";
-import { GoogleLogin } from "react-google-login";
-import { useAuth0 } from "@auth0/auth0-react";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { loginWithRedirect } = useAuth0();
-
-  // const clientId =
-  //   "853499335497-o0v7ho2cgj21tkjclb7evevhr3nncec5.apps.googleusercontent.com";
 
   const handleLogin = () => {
     if (username === "admin" && password === "password") {
@@ -24,14 +20,6 @@ const LoginPage = () => {
     } else {
       toast.error("Invalid username or password", { position: "top-center" });
     }
-  };
-  const onSuccess = () => {
-    toast.success("Login successful!", { position: "top-center" });
-    navigate("/");
-  };
-
-  const onFailure = () => {
-    toast.error("Invalid username or password", { position: "top-center" });
   };
 
   return (
@@ -76,25 +64,24 @@ const LoginPage = () => {
               By logging in, you accept our terms and conditions !
             </Typography>
             <div>
-              {/* <GoogleLogin onClick={() => loginWithRedirect()}></GoogleLogin> */}
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={loginWithRedirect}
-                className={"button"}
-                fullWidth
-              >
-                Login with google
-              </Button>
-              {/* 
               <GoogleLogin
-                clientId={clientId}
-                buttonText="Login with Google"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy={"sinngle_host_origin"}
-                onClick={() => loginWithRedirect()}
-              ></GoogleLogin> */}
+                onSuccess={(credentialResponse) => {
+                  const credentials = jwt_decode(credentialResponse.credential);
+                  console.log("credentials", typeof credentials);
+                  localStorage.setItem(
+                    "userDetails",
+                    JSON.stringify(credentials)
+                  );
+                  toast.success(`welcome ${credentials.name}`, {
+                    position: "top-center",
+                  });
+                  navigate("/");
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+                useOneTap
+              />
             </div>
           </form>
         </Paper>

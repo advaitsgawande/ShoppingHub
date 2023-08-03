@@ -13,9 +13,10 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { ToastContainer } from "react-toastify";
-import { Auth0Provider } from "@auth0/auth0-react";
-// import { gapi } from "gapi-script";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import "@stripe/stripe-js";
+import Success from "./pages/Success/Success";
+import Cancel from "./pages/Cancel/Cancel";
 function App() {
   const theme = createTheme({
     status: {
@@ -23,13 +24,7 @@ function App() {
     },
   });
   return (
-    <Auth0Provider
-      domain="dev-3h28rirk7eqi7fhw.us.auth0.com"
-      clientId="LXs9TnASf15jhFISwaNR3RyStjQrYUuF"
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-      }}
-    >
+    <GoogleOAuthProvider clientId="853499335497-o0v7ho2cgj21tkjclb7evevhr3nncec5.apps.googleusercontent.com">
       <div className="App">
         <ToastContainer />
         <ThemeProvider theme={theme}>
@@ -54,13 +49,15 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route path="/success" element={<Success />} />
+                <Route path="/cancel" element={<Cancel />} />
               </Routes>
               <Footer />
             </BrowserRouter>
           </Provider>
         </ThemeProvider>
       </div>
-    </Auth0Provider>
+    </GoogleOAuthProvider>
   );
 }
 
