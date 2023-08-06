@@ -5,6 +5,7 @@ import { setIsModalVisible } from "../../store/modalSlice";
 import { addToCart } from "../../store/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
+import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
@@ -82,21 +83,24 @@ const SingleProduct = () => {
               <div className="qty flex">
                 <span className="text-light-blue qty-text">Qty: </span>
                 <div className="qty-change flex">
-                  <button
-                    type="button"
+                  <IconButton
+                    variant="contained"
+                    color="primary"
                     className="qty-dec fs-14"
                     onClick={() => decreaseQty()}
                   >
                     <RemoveIcon />
-                  </button>
+                  </IconButton>
                   <span className="qty-value flex flex-center">{qty}</span>
-                  <button
-                    type="button"
-                    className="qty-inc fs-14 text-light-blue"
+                  <IconButton
+                    aria-label="delete"
+                    variant="contained"
+                    color="primary"
+                    className="qty-dec fs-14"
                     onClick={() => increaseQty()}
                   >
                     <AddIcon />
-                  </button>
+                  </IconButton>
                 </div>
               </div>
               <button

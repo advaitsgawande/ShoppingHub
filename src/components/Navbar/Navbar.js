@@ -34,26 +34,27 @@ const Navbar = () => {
               <span className="text-gold">Online</span>
               <span className="text-red">Store</span>
             </Link>
-
-            {location.pathname !== "/login" ? (
-              <div className="navbar-btns">
-                <Link to="/cart" className="add-to-cart-btn flex">
-                  <span className="btn-ico">
-                    <i className="fas fa-shopping-cart"></i>
-                  </span>
-                  <div className="btn-txt fw-5">
-                    Cart
-                    <span className="cart-count-value">{totalItems}</span>
-                  </div>
-                </Link>
-              </div>
-            ) : null}
-            <div className="btn-txt fw-5">
+            <div className="flex flex-between">
               {location.pathname !== "/login" ? (
-                <button onClick={logoutMethod}>
-                  <LogoutIcon fontSize="large" />
-                </button>
+                <div className="navbar-btns">
+                  <Link to="/cart" className="add-to-cart-btn flex">
+                    <span className="btn-ico">
+                      <i className="fas fa-shopping-cart"></i>
+                    </span>
+                    <div className="btn-txt fw-5">
+                      Cart
+                      <span className="cart-count-value">{totalItems}</span>
+                    </div>
+                  </Link>
+                </div>
               ) : null}
+              <div className="btn-txt fw-5" style={{ marginLeft: 30 }}>
+                {location.pathname !== "/login" ? (
+                  <button onClick={logoutMethod}>
+                    <LogoutIcon fontSize="medium" />
+                  </button>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
