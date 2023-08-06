@@ -17,7 +17,7 @@ const ProtectedRoute = ({ children }) => {
       console.log("details", typeof details);
       dispatch(setUserDetails(JSON.parse(details)));
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, dispatch]);
 
   return (
     <React.Fragment>

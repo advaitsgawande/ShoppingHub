@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Slider.scss";
 import { sliderImages } from "../../utils/images";
 import Box from "@mui/material/Box";
@@ -8,10 +8,6 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 
 const Slider = () => {
-  //  const theme = useTheme();
-  const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = sliderImages.length;
-
   return (
     <div className="hero-slider-item">
       <Box>
@@ -23,7 +19,7 @@ const Slider = () => {
         >
           {sliderImages.map((img) => (
             <SwiperSlide>
-              <img src={img} />
+              <img src={img} alt="Slide" />
             </SwiperSlide>
           ))}
         </Swiper>
