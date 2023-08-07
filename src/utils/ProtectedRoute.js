@@ -14,10 +14,10 @@ const ProtectedRoute = ({ children }) => {
       navigate("/login");
     } else {
       let details = localStorage.getItem("userDetails");
-      console.log("details", typeof details);
       dispatch(setUserDetails(JSON.parse(details)));
     }
-  }, [isAuthenticated, navigate, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, navigate]);
 
   return (
     <React.Fragment>

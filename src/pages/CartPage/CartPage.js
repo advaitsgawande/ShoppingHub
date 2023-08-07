@@ -39,21 +39,34 @@ const CartPage = () => {
     quantity: 1,
   };
 
+  const SuccessUrl =
+    window.location.hostname === "localhost"
+      ? `${window.location.origin}/success/local`
+      : `${window.location.origin}/success`;
+
+  const CancelUrl =
+    window.location.hostname === "localhost"
+      ? `${window.location.origin}/cancel/local`
+      : `${window.location.origin}/cancel`;
   const checkoutOptions = {
     lineItems: [item],
     mode: "payment",
-    successUrl: `${window.location.origin}/success`,
-    cancelUrl: `${window.location.origin}/cancel`,
+    // successUrl: `${window.location.origin}/success`,
+    // successUrl: `https://64cf58e1dad64a2cde2ba9e6--musical-salmiakki-6c766e.netlify.app/success`,
+    successUrl: SuccessUrl,
+
+    // cancelUrl: `${window.location.origin}/cancel`,
+    cancelUrl: CancelUrl,
   };
 
   const redirectToCheckout = async () => {
     setLoading(true);
-    console.log("redirectToCheckout");
 
     const stripe = await getStripe();
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
-    console.log("Stripe checkout error", error);
-
+    if (!error) {
+      dispatch(getCartTotal());
+    }
     if (error) setStripeError(error.message);
     setLoading(false);
   };
