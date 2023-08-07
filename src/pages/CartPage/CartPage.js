@@ -39,24 +39,25 @@ const CartPage = () => {
     quantity: 1,
   };
 
-  const SuccessUrl =
-    window.location.hostname === "localhost"
-      ? `${window.location.origin}/success/local`
-      : `${window.location.origin}/success`;
-
-  const CancelUrl =
-    window.location.hostname === "localhost"
-      ? `${window.location.origin}/cancel/local`
-      : `${window.location.origin}/cancel`;
+  const getSuccessUrl = () => {
+    if (window.location.hostname === "localhost") {
+      return `${window.location.origin}/success`;
+    } else {
+      return `${window.location.origin}/success`;
+    }
+  };
+  const getCancelUrl = () => {
+    if (window.location.hostname === "localhost") {
+      return `${window.location.origin}/cancel`;
+    } else {
+      return `${window.location.origin}/cancel`;
+    }
+  };
   const checkoutOptions = {
     lineItems: [item],
     mode: "payment",
-    // successUrl: `${window.location.origin}/success`,
-    // successUrl: `https://64cf58e1dad64a2cde2ba9e6--musical-salmiakki-6c766e.netlify.app/success`,
-    successUrl: SuccessUrl,
-
-    // cancelUrl: `${window.location.origin}/cancel`,
-    cancelUrl: CancelUrl,
+    successUrl: getSuccessUrl(),
+    cancelUrl: getCancelUrl(),
   };
 
   const redirectToCheckout = async () => {

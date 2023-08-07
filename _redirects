@@ -1,0 +1,5 @@
+# Redirect to success page after successful payment
+/success/*  /success   200
+
+# Redirect to cancel page after canceled payment
+/cancel/*   /cancel    200
