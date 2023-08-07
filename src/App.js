@@ -24,7 +24,9 @@ function App() {
     },
   });
   return (
-    <GoogleOAuthProvider clientId="853499335497-o0v7ho2cgj21tkjclb7evevhr3nncec5.apps.googleusercontent.com">
+    <GoogleOAuthProvider
+      clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+    >
       <div className="App">
         <ToastContainer />
         <ThemeProvider theme={theme}>

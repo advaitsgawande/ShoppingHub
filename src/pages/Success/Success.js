@@ -1,8 +1,8 @@
+import "./Success.scss";
 const Success = () => {
   return (
     <div className="success-page">
-      <h1>Success</h1>
-      <h2>Thank you for your purchase!</h2>
+      <h2>Thank you for your purchase! ✅</h2>
     </div>
   );
 };
