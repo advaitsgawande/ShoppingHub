@@ -1,7 +1,10 @@
-# Redirect to success page after successful payment
+
+[[redirects]]
+/*  /index.html   200
+/6c766e/netlify/*  /index.html  200
+
 /success/*  /success   200
 /6c766e/netlify/success/*  /success  200
 
-# Redirect to cancel page after canceled payment
 /cancel/*   /cancel    200
 /6c766e/netlify/cancel/*  /cancel  200
